@@ -6,3 +6,5 @@ services:
     image: rhrn/dynamic-proxy
     ports:
       - 8880:80
+    labels:
+      - traefik.enable=false
