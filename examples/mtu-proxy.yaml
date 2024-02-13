@@ -1,0 +1,24 @@
+version: '3.7'
+
+networks:
+  mtu-fixup:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1300
+
+services:
+
+  mtu-proxy:
+    image: rhrn/dynamic-proxy:openresty-1.25
+    restart: always
+    ports:
+      - 8880:80
+    volumes:
+      - /etc/resolv.conf:/etc/resolv.conf:ro
+    networks:
+      - mtu-fixup
+    logging: &default-logging
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '2'
